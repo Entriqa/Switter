@@ -1,7 +1,5 @@
 import datetime
 import sqlalchemy
-from flask_login import UserMixin
-from sqlalchemy import orm
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from .db_session import SqlAlchemyBase
@@ -11,6 +9,7 @@ from sqlalchemy_serializer import SerializerMixin
 class User(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'users'
 
+    id = sqlalchemy.Column(sqlalchemy.Integer, autoincrement=True, primary_key=True)
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     age = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
