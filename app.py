@@ -3,6 +3,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 
 from data import db_session
 from data.login_form import LoginForm
+from data.register import RegisterForm
 from data.users import User
 
 
@@ -19,23 +20,31 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
+    return render_template('register.html', tittle='Registration', form=form)
+
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    db_sess = db_session.create_session()
+    form = LoginForm()
+    if form.validate_on_submit():
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
-        return render_template('login.html', message="Wrong login or password", form=form)
-    return render_template('login.html', title='Authorization', form=form)
+        return render_template('index.html', message="Wrong login or password", form=form)
+    return render_template('index.html', title='Authorization', form=form)
 
 
-@app.route("/")
-def index():
-    db_sess = db_session.create_session()
-    return render_template("index.html", title='Switter')
+# @app.route("/")
+# def index():
+#     db_sess = db_session.create_session()
+#     return render_template("login.html", title='Switter')
 
 
 @app.route('/logout')
