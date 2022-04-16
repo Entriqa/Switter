@@ -8,6 +8,20 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.one {
+  background: #6495ED;
+  padding: 100px 20px;
+
+}
+.one h1 {
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  color: #333;
+  font-size: 3em;
+  margin: 0;
+  line-height: 1;
+}
+
 body{
     height: 100vh;
     display: flex;
@@ -19,15 +33,46 @@ body{
 .container{
     position: relative;
     max-width: 430px;
-    width: 100%:
+    width: 100%;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     background: #fff;
     border-radius: 10px;
-
+    overflow: hidden;
 }
 
+.container .forms{
+    display: flex;
+    align-items: center;
+    height: 440px;
+    width: 200%;
+    transition: height 0.2s ease;
+}
+
+
 .container .form{
+    width: 50%;
     padding: 30px;
+    background-color: #fff
+    transition: margin-left 0.18s ease;
+}
+
+.container.active .login{
+    margin-left: -50%;
+    opacity: 0;
+    transition: margin-left 0.18s ease, opacity0.15s ease;
+}
+
+.container .signup{
+    opacity: 0;
+    transition: opacity 0.09s ease;
+}
+.container.active .signup{
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.container.active .forms{
+    height: 600px;
 }
 
 .container .form .title{
@@ -57,7 +102,7 @@ body{
 .input-field input{
     position: absolute;
     height: 100%;
-    width: 100%
+    width: 100%;
     padding: 0 35px;
     border: none;
     outline: none;
@@ -85,6 +130,9 @@ body{
 
 .input-field i.icon{
     left: 0;
+    cursor: pointer;
+    padding: 10px;
+
 }
 
 .input-field i.showHidePw{
@@ -122,3 +170,27 @@ body{
     text-decoration: underline;
 }
 
+.form .button{
+    margin-top: 35px;
+}
+
+.form .button input{
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    background-color: #6495ED;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button input:hover{
+    background-color: #265df2
+}
+
+.form .login-signup{
+    margin-top: 30px;
+    text-align: center;
+}

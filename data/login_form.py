@@ -8,25 +8,4 @@ class LoginForm(FlaskForm):
     email = EmailField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember me')
-    submit = SubmitField('Sign in')
-
-
-# td.title {
-#     background-color: "#dddddd";
-#     align: "center";
-#     font-size: 14pt;
-#     padding: 5px;
-# }
-# td.ordinary {
-#     background-color: "#eeeeff";
-#     align: "center";
-#     font-size: 14pt;
-#     padding: 5px;
-# }
-# h4 {
-#     color: #cccccc;
-#     padding: 20px;
-# }
-# p {
-#     font-size: 14pt;
-# }
+    submit = SubmitField('Login Now')
