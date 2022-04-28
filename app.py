@@ -3,6 +3,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 
 from data import db_session
 from data.users import User
+from flask_socketio import SocketIO
 
 from data.user_forms import LoginForm, RegisterForm
 
@@ -12,8 +13,7 @@ app.config['SECRET_KEY'] = 'switterry_secret_key'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-
+socketio = SocketIO(app)
 
 
 @login_manager.user_loader
@@ -44,7 +44,7 @@ def index():
 def profile(prof_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == prof_id).first()
-    return render_template("prof_page.html", name=user.name)
+    return render_template("prof_page_base.html", name=user.name)
 
 
 @app.route('/auth', methods=['GET', 'POST'])
