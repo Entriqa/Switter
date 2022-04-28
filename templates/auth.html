@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Switter - Authorization</title>
+</head>
+
+<body>
+<header>
+    <div class="one"><h1>Switter</h1></div>
+
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Login</span>
+
+                <form action="#" method="post">
+                    {{ login_form.hidden_tag() }}
+                    <div class="input-field">
+                        {{ login_form.email(placeholder="Enter your email") }}
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+                    <div class="input-field">
+                        {{ login_form.password(class="password", placeholder="Enter your password") }}
+                        <i class="uil uil-lock"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                    </div>
+
+                    <div class="checkbox-text">
+                        <div class="checkbox-content">
+                            {{ login_form.remember_me(id="logCheck") }}
+                            {{ login_form.remember_me.label(class="text") }}
+                        </div>
+
+                            <a href="#" class="text">Forgot password?</a>
+                    </div>
+
+                    <div class="input-field button">
+                        {{ login_form.submit(value="Login Now") }}
+                    </div>
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">Not a member?
+                        <a href="#" class="text signup-link">Signup now</a>
+                        <div>{{ message }}</div>
+                    </span>
+                </div>
+            </div>
+
+<!--            Registration form-->
+            <div class="form signup">
+                <span class="title">Registration</span>
+
+                <form action="#" method="POST">
+                    {{ reg_form.hidden_tag() }}
+                    <div class="input-field">
+                        {{ reg_form.name(placeholder="Enter your name") }}
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        {{ reg_form.email(placeholder="Enter your email") }}
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+                    <div class="input-field">
+                        {{ reg_form.password(class="password", placeholder="Create a password") }}
+                        <i class="uil uil-lock"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                    </div>
+                    <div class="input-field">
+                        {{ reg_form.password_again(placeholder="Confirm a password") }}
+                        <i class="uil uil-lock"></i>
+                    </div>
+                    <div class="checkbox-text">
+                        <div class="checkbox-content">
+                            {{ reg_form.remember_me(id="sigCheck") }}
+                            {{ reg_form.remember_me.label(class="text") }}
+                        </div>
+
+                            <a href="#" class="text">Forgot password?</a>
+                    </div>
+
+                    <div class="input-field button">
+                        {{ reg_form.submit(value="Sign Up") }}
+                    </div>
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">Not a member?
+                        <a href="#" class="text login-link">Signup now</a>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <script src="../static/js/script.js"></script>
+</header>
+</body>
+</html>
