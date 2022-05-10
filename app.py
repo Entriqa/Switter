@@ -11,7 +11,7 @@ from data.user_forms import LoginForm, RegisterForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'switterry_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://db/posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -37,13 +37,6 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
-# Cтраница с лентой
-@app.route('/news_feed')
-def main_page():
-    articles = Articles.query.order_by(Articles.date.desc()).all()
-    return render_template("news_feed.html", articles=articles)
-
-
 # Страница с добавлением постов
 @app.route('/create_post', methods=['POST', 'GET'])
 def create_post():
@@ -63,9 +56,11 @@ def create_post():
         return render_template("create_post.html")
 
 
+# Cтраница с лентой
 @app.route('/news_feed')
 def main_page():
-    return render_template("news_feed.html")
+    articles = Articles.query.order_by(Articles.date.desc()).all()
+    return render_template("news_feed.html", articles=articles)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
