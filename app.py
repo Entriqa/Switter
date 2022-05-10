@@ -1,5 +1,7 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 from data import db_session
 from data.users import User
@@ -7,19 +9,63 @@ from flask_socketio import SocketIO
 
 from data.user_forms import LoginForm, RegisterForm
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'switterry_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://db/posts.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 socketio = SocketIO(app)
 
 
+class Articles(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    intro = db.Column(db.String(250), nullable=False)
+    text = db.Column(db.Text, nullable=False)
+    date = db.Column(db.DateTime, default=datetime.utcnow())
+
+    def __repr__(self):
+        return '<Article %r>' % self.id
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
+
+
+# Cтраница с лентой
+@app.route('/news_feed')
+def main_page():
+    articles = Articles.query.order_by(Articles.date.desc()).all()
+    return render_template("news_feed.html", articles=articles)
+
+
+# Страница с добавлением постов
+@app.route('/create_post', methods=['POST', 'GET'])
+def create_post():
+    if request.method == "POST":
+        title = request.form['title']
+        intro = request.form['intro']
+        text = request.form['text']
+        article = Articles(title=title, intro=intro, text=text)
+
+        try:
+            db.session.add(article)
+            db.session.commit()
+            return redirect('/news_feed')
+        except:
+            return "При добавлении поста произошла ошибка"
+    else:
+        return render_template("create_post.html")
+
+
+@app.route('/news_feed')
+def main_page():
+    return render_template("news_feed.html")
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -32,7 +78,6 @@ def register():
 
 @app.route("/")
 def index():
-
     if not current_user.is_authenticated:
         return redirect("/auth")
 
@@ -84,6 +129,7 @@ def logout():
     return redirect("/")
 
 
+@app.route('/news_feed')
 def main():
     db_session.global_init("db/users.sqlite")
     app.run()

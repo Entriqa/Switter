@@ -21,6 +21,7 @@ body {
 	background: #6495ED;
 	padding: 6px 14px;
 	transition: all 0.5s ease;
+	z-index: 10;
 }
 
 .sidebar.active {
@@ -272,14 +273,33 @@ body {
 	transition: all 0.5s ease;
 }
 
+.sidebar.active ~ .home_content {
+	width: calc(100% - 240px);
+	left: 240px;
+}
+
 .home_content .text{
 	font-size: 25px;
 	font-weight: 500;
 	color: #487cd9;
 	margin: 12px;
+	margin-bottom: 5px;
+	margin-left: 3%;
 }
 
-.sidebar.active ~ .home_content {
-	width: calc(100% - 240px);
-	left: 240px;
+.create_post_cont {
+	margin-top: 10px;
+	margin-left: 2%;
+	margin-right: 10%;
+	width: 60%;
+	height: 50px;
+	font-size: 18px;
+	background: white;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	border-color: #487cd9;
+	border-width: 2px;
+	padding-left: 8px;
 }
+
+
